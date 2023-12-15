@@ -2,11 +2,20 @@ version: "2"
 
 services:
   nexus:
-    image: vulcanos/nexus3
-    volumes:
-      - "nexus-data:/nexus-data"
-    ports:
-      - "8081:8081"
-  
+      build:
+        context: build/
+      volumes:
+        - "nexus-data:/nexus-data"
+      ports:
+        - "8081:8081"
+
 volumes:
   nexus-data: {}
+
+networks:
+  nexus:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.200.0/24
