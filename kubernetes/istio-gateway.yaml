@@ -1,0 +1,65 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: nexus3-gateway
+  namespace: nexus3
+  labels:
+    app: nexus
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+#    tls:
+#      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      maxProtocolVersion: TLSV1_3
+      minProtocolVersion: TLSV1_2
+      credentialName: nexus-tls
+    hosts:
+      - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nexus3
+  namespace: nexus3
+  labels:
+    app: nexus
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - nexus3-gateway
+  http:
+    - match:
+        - port: 80
+        - port: 443
+      route:
+        - destination:
+            host: nexus-service
+            port:
+              number: 8081
+
+#  tls:
+#  - match:
+#      - port: 443
+#        sniHosts:
+#          - "security.nexus.wemade.com"
+#    route:
+#    - destination:
+#        host: nexus-service
+#        port:
+#          number: 8081
+
+
