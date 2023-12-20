@@ -58,14 +58,11 @@ RUN wget https://download.sonatype.com/nexus/3/nexus-${VERSION}-unix.tar.gz \
     && chown -R nexus:nexus ${NEXUS_DATA} \
     && sed -i 's/..\/sonatype-work\/nexus3/\/nexus-data/g' ${NEXUS_HOME}/bin/nexus.vmoptions \
     && sed -i 's/\#run_as_user=\"\"/run_as_user=\"nexus\"/g' ${NEXUS_HOME}/bin/nexus.rc \
-    && echo "application-port-ssl=8443" >> ${NEXUS_HOME}/etc/nexus-default.properties \
     && chmod u+s ${NEXUS_HOME}/bin/nexus \
     && apk add openjdk8 \
     && apk cache clean
 
 EXPOSE 8081
-EXPOSE 8443
-
 
 
 ENV INSTALL4J_ADD_VM_PARAMS="-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs"
@@ -74,4 +71,4 @@ USER nexus
 WORKDIR ${NEXUS_HOME}
 VOLUME ${NEXUS_DATA}
 
-ENTRYPOINT ["/opt/nexus/bin/nexus", "run"]
+CMD ["/opt/nexus/bin/nexus", "run"]

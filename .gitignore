@@ -23,3 +23,8 @@ target/
 atlassian-ide-plugin.xml
 dependency-reduced-pom.xml
 out
+
+cert
+
+.env
+kubernetes/nexus-cert-config.yaml

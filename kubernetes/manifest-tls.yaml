@@ -63,11 +63,14 @@ items:
         spec:
           containers:
             # - image: sonatype/nexus3:latest
-            - image: vulcanos/nexus3:latest
+            - image: vulcanos/nexus3-tls:latest
               name: nexus
+              envFrom:
+                - configMapRef:
+                    name: nexus-cert-config
               ports:
-                - containerPort: 8081
-                - containerPort: 5000
+                - containerPort: 8443
+                - containerPort: 5443
               volumeMounts:
                 - mountPath: /nexus-data
                   name: nexus-data-volume
@@ -75,6 +78,8 @@ items:
             - name: nexus-data-volume
               persistentVolumeClaim:
                 claimName: nexus-pvc
+
+
 
   - apiVersion: v1
     kind: Service
@@ -88,14 +93,13 @@ items:
     spec:
       type: LoadBalancer
       ports:
-        - port: 8081
-          targetPort: 8081
+        - port: 8443
+          targetPort: 8443
           protocol: TCP
-          name: http
-        - port: 5000
-          targetPort: 5000
+          name: https
+        - port: 5443
+          targetPort: 5443
           protocol: TCP
-          name: http-docker-repo
-
+          name: https-docker-repo
       selector:
         app: nexus

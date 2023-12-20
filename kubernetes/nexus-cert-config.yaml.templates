@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nexus-cert-config
+  namespace: nexus3
+data:
+  CN:
+  OU:
+  ORG:
+  LOCALITY:
+  STATE:
+  COUNTRY:
+  SAN_DNS:

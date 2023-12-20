@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nexus3
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nexus-cert-config
+  namespace: nexus3
+data:
+  CN: "*.wemade.com"
+  OU: Security
+  ORG: Wemade
+  LOCALITY: Seongnam
+  STATE: Gyeonggi-do
+  COUNTRY: KR
+  SAN_DNS: nexus.wemade.com
