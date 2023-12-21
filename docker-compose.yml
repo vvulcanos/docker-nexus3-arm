@@ -2,12 +2,14 @@ version: "2"
 
 services:
   nexus:
-      build:
-        context: build/
+      image: vulcanos/nexus3-tls
       volumes:
         - "nexus-data:/nexus-data"
       ports:
-        - "8081:8081"
+        - "8443:8443"
+        - "5443:5443"
+      env_file:
+        - .env
 
 volumes:
   nexus-data: {}

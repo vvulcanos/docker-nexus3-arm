@@ -16,4 +16,4 @@ data:
   LOCALITY: Seongnam
   STATE: Gyeonggi-do
   COUNTRY: KR
-  SAN_DNS: nexus.wemade.com
+  SAN_DNS: nexus-service.nexus3.svc.cluster.local
