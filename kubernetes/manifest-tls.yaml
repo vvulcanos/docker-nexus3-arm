@@ -65,6 +65,13 @@ items:
             # - image: sonatype/nexus3:latest
             - image: vulcanos/nexus3-tls:latest
               name: nexus
+              resources:
+                requests:
+                  cpu: "500m"
+                  memory: "2Gi"
+                limits:
+                  memory: "4Gi"
+                  cpu: "4000m"
               envFrom:
                 - configMapRef:
                     name: nexus-cert-config
